@@ -1,8 +1,5 @@
-# Conversion Tool Motivation
-
-Most GOES-16 Level 2 (L2) products are written to a scaled satellite scan angle rather than a map projection. While this helps reduce filesizes, the resulting image is not georeferenced and will project to a "flat" cartesian x,y grid. This requires a work around to geolocate data and save the result as a netCDF file.
-
-# Description
+# Geolocation Look-up Tables
+## Description
 This program converts GOES-16 L1b and L2 products netCDF files from the fixed grid radian scan angle coordinates to their corresponding latitude longitude projection. The result is then re-saved in a more easily viewed NetCDF file.
 
 Converting files occurs in three simple steps:
@@ -25,13 +22,12 @@ Then type the code below:
 ```
 pip install -r requirements.txt
 ```
-You will only need to this once ever on your machine or python environment.
 
 ## Running
-### Step 1: Place a file that you want to convert into the “input folder”
-Before doing anything, you need to have ABI L2 NetCDF files. Place the files that you wish to convert into the input folder. Keep in mind that it may take a few longer to run the first time while navigation look-up tables are being generated and saved.
 
-Note: If more than one file of the same product and region are placed in the input folder, they will be combined into a single file.
+### Step 1: Place files that you want to convert into the “input folder”
+Before doing anything, you need to have ABI L2 NetCDF files. Place the files that you wish to convert into the input folder. It may take a few minutes to run, particularly with high-resolution fulldisk products.
+
 ### Step 2: Run the script
 
 #### Option 1: Command line
@@ -49,15 +45,12 @@ python main_input_output.py
 Open the Anaconda Navigator, run Spyder, and then open the main_input_outpu.py script. You can simply press the big "Play" button at the top to run the script.
 
 ### Step 3: Check the Output
-Finished files will be saved in as ABI-[product name][region]-converted.nc
+Finished files will be saved in as latlon-[L1b/L2]_[conus/fulldisk].nc
 
-## Useful NetCDF viewing tools
-
-* [Panoply](https://www.giss.nasa.gov/tools/panoply/)
+To check the results, NetCDF files can be easilly viewed using [Panoply](https://www.giss.nasa.gov/tools/panoply/).
 
 ## Author
-
-* **Rebekah Esmaili** [rebekah.esmaili@gmail.com](mailto:rebekah.esmaili@gmail.com)
+* **Rebekah Bradley Esmaili** [bekah@umd.edu](mailto:bekah@umd.edu)
 
 ## More Information
 
