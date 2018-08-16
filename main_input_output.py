@@ -17,7 +17,7 @@ Created on Thu Sep  7 16:49:55 2017
     output/latlon_[L1b/L2]_[conus/fulldisk].nc
 
 @author: Rebekah Bradley Esmaili
-@email: rebekah.esmaili@gmail.com
+@email: bekah@umd.edu
 """
 from netCDF4 import Dataset
 #import numpy as np
