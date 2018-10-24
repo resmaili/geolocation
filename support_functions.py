@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-created on fri aug 25 10:15:47 2017
 @Description
     Support functions to perform common GOES-16 ABI L2 operations.
     
 @Version: 1.0
 
 @author: Rebekah Bradley Esmaili
-@email: rebekah.esmaili@gmail.com
+@email: bekah@umd.edu
 """
 import numpy as np
 import numpy.ma as ma

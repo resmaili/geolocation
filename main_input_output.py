@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep  7 16:49:55 2017
 @Description
     This program converts L2 GOES-16 product netCDF files from 
     the fixed grid radian coordinates to their coresponding latitude longitude projection. 
