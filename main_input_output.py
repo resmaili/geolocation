@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 @Description
-    This program converts L2 GOES-16 product netCDF files from 
-    the fixed grid radian coordinates to their coresponding latitude longitude projection. 
+    This program converts GOES product netCDF files from 
+    the fixed grid radian coordinates to their coresponding 
+    latitude longitude projection. 
 
 @Dependencies
     support_functions.py
 
 @Inputs
-    Any GOES-16 L1b or L2 product.
-    ABI aerosol products can be downloaded from https://www.class.ngdc.noaa.gov.
+    Any GOES L1b or L2 product. Products an be downloaded from 
+    https://www.class.ngdc.noaa.gov.
 
 @Outputs
     output/latlon_[L1b/L2]_[conus/fulldisk].nc
@@ -39,7 +40,7 @@ if not exists(inputPath):
 if not exists(outputPath):
     makedirs(outputPath)
 
-searchForFiles = join(inputPath, "OR_ABI-*.nc")
+searchForFiles = join(inputPath, "*.nc")
 filenames = [basename(i) for i in glob(searchForFiles)]
 
 geolocFiles = detect_file_types(filenames)
