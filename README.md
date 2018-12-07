@@ -1,6 +1,6 @@
 # Geolocation Look-up Tables
 ## Description
-This program converts GOES-16 L1b and L2 products netCDF files from the fixed grid radian scan angle coordinates to their corresponding latitude longitude projection. The result is then re-saved in a more easily viewed NetCDF file.
+This program creates a geolocation file for GOES-16 L1b and L2 datasets. The native netCDF files contain fixed grid radian scan angle coordinates and this program calculates the corresponding latitude longitude projection fo each pixel. The result is then re-saved in a more easily viewed NetCDF file.
 
 Converting files occurs in three simple steps:
 1. Download and place files that you wish to display in the input folder.
@@ -25,29 +25,31 @@ pip install -r requirements.txt
 
 ## Running
 
-### Step 1: Place files that you want to convert into the “input folder”
-Before doing anything, you need to have ABI L2 NetCDF files. Place the files that you wish to convert into the input folder. It may take a few minutes to run, particularly with high-resolution fulldisk products.
+### Step 1: Update the path of the file that you want to convert in the "filename" variable
+Before doing anything, you need to have ABI L2 NetCDF files. At the bottom the program, under main(), you can update the filename variable. Change the outname variable to something meaningful (should indicate if it's L1 or L2, CONUS or FD, the satellite, date generated, etc). It may take a few minutes to run, particularly with high-resolution fulldisk products.
+
+Note: On Mac/Linux, the paths are written with a forward slash (/) whereas on PCs, it's written with two backslashes (\\\\)
 
 ### Step 2: Run the script
 
 #### Option 1: Command line
 Open the terminal on your respective OS:
-* Windows: search for the "Anaconda Prompt" on your local computer or find it manually in your list of programs.
+* Windows: search for the "Anaconda Prompt" on your local computer or find it manually in your list of programs. You will need to write the full path of the python script (including to the input files). You may have to manually tell Windows to associate python with \*.py files.
 
 * Mac: open the terminal.
 
 You can run the script via the Anaconda Prompt or terminal by typing:
 ```
-python main_input_output.py
+python main.py
 ```
 
 #### Option 2: Run in the Spyder development environment
-Open the Anaconda Navigator, run Spyder, and then open the main_input_outpu.py script. You can simply press the big "Play" button at the top to run the script.
+Open the Anaconda Navigator, run Spyder, and then open the main.py script. You can simply press the big "Play" button at the top to run the script.
 
 ### Step 3: Check the Output
-Finished files will be saved in as latlon-[L1b/L2]_[conus/fulldisk].nc
+Finished files will be saved in as latlon-[L1b/L2]\_[conus/fulldisk].nc
 
-To check the results, NetCDF files can be easilly viewed using [Panoply](https://www.giss.nasa.gov/tools/panoply/).
+To check the results, NetCDF files can be easily viewed using [Panoply](https://www.giss.nasa.gov/tools/panoply/).
 
 ## Author
 * **Rebekah Bradley Esmaili** [bekah@umd.edu](mailto:bekah@umd.edu)

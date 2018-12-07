@@ -1,40 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-@Description
-    Support functions to perform common GOES-16 ABI L2 operations.
-    
-@Version: 1.0
-
-@author: Rebekah Bradley Esmaili
-@email: bekah@umd.edu
-"""
+from os.path import join, exists, dirname, abspath, basename
+from netCDF4 import Dataset
 import numpy as np
-import numpy.ma as ma
-from glob import glob
-from os.path import join, basename
+from tqdm import tqdm
 
-domainNice = {'C': 'conus', 'F': 'fulldisk'}
+def get_abi_2d_lat_lon_coordinates(file_id, outname):
+    # Re-maps x, y into lat/lon projection, saves file for future use/faster processing.
 
-#----------------------------------------------------------------------------
-def detect_file_types(full_filenames):
-    search_for_files = join(input_path, "OR_ABI-*.nc")
-    filenames = [basename(i) for i in full_filenames]
-
-    geolocation_files = []
-    for filename in filenames:
-        domain = filename.split("-")[2][3:4]
-		level =  filename.split("-")[1]     
-
-		geolocation_files.append('latlon_' + level + '_' + domainNice[domain] + '.nc')
-
-    return geolocation_files
-
-#----------------------------------------------------------------------------
-def get_abi_2d_lat_lon_coordinates(filein, fileout):
-
-	file_id = Dataset(filein, mode='r')
-	
     bytescale_x_vector = file_id.variables['x'][:]
     x_scale_factor = file_id.variables['x'].scale_factor
     x_offset = file_id.variables['x'].add_offset
@@ -45,8 +18,6 @@ def get_abi_2d_lat_lon_coordinates(filein, fileout):
 
     sub_lon = file_id.variables['goes_imager_projection'].longitude_of_projection_origin
     sub_lat = file_id.variables['goes_imager_projection'].latitude_of_projection_origin
-
-    sub_lon = -75.0
 
     xdim = len(bytescale_x_vector)
     ydim = len(bytescale_y_vector)
@@ -61,11 +32,9 @@ def get_abi_2d_lat_lon_coordinates(filein, fileout):
                 x_scale_factor, y_scale_factor,
                 sub_lon, sub_lat)
 
-    create_lat_lon_netcdf(latitude, longitude, file_id, name=fileout)
-    
-    return latitude, longitude
-    
-#----------------------------------------------------------------------------
+    # Save results to file to speed up future processing
+    create_lat_lon_netcdf(latitude, longitude, file_id, name=outname)
+
 def convert_bytescale_to_coordinates(column,  row,
     column_offset,  row_offset,
     column_factor, row_factor,
@@ -109,32 +78,40 @@ def convert_bytescale_to_coordinates(column,  row,
 
         return latitude_degrees, longitude_degrees
 
-#----------------------------------------------------------------------------
 def create_lat_lon_netcdf(latitude_2d, longitude_2d, file_id, name):
     from netCDF4 import Dataset
-    
+
+    missing=-999.0
+
     rootgrp = Dataset(name, "w", format="NETCDF4")
-    rootgrp.description = "CONUS coordinates (degrees) for L2 AOD and ADP GOES-16 Products"
-    
+    rootgrp.description = "Fulldisk coordinates (degrees) for L2 GOES-17 (Test Position!)"
+
     lat = rootgrp.createDimension("lat", latitude_2d.shape[0])
     lon = rootgrp.createDimension("lon", longitude_2d.shape[1])
-    
+
     latitudes = rootgrp.createVariable("latitude","f4",("lat","lon"), zlib=True, least_significant_digit=2)
     longitudes = rootgrp.createVariable("longitude","f4",("lat","lon"), zlib=True, least_significant_digit=2)
-    
+
     # Save substellite point in file
     longitude_of_projection_origin = rootgrp.createVariable("nominal_satellite_subpoint_lon", "f8",  zlib=True, least_significant_digit=2)
     latitude_of_projection_origin = rootgrp.createVariable("nominal_satellite_subpoint_lat", "f8",  zlib=True, least_significant_digit=2)
-    
+
     latitude_of_projection_origin[0] = file_id.variables['goes_imager_projection'].latitude_of_projection_origin
     longitude_of_projection_origin[0] = file_id.variables['goes_imager_projection'].longitude_of_projection_origin
-    
+
     latitudes.units = "degrees north"
     longitudes.units = "degrees east"
-    
+
     latitudes[:,:] = latitude_2d
     longitudes[:,:] = longitude_2d
 
     rootgrp.close()
-    
-#----------------------------------------------------------------------------
+
+def main():
+    outname="latlon_L2_G17_CONUS_89W_2.nc"
+    filename="OR_ABI-L2-AODC-M3_G17_s20182211612186_e20182211614557_c20182211615551.nc"
+
+    file_id = Dataset(filename, mode='r')
+    get_abi_2d_lat_lon_coordinates(file_id, outname)
+
+main()
