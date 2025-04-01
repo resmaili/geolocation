@@ -52,11 +52,10 @@ Finished files will be saved in as latlon-[L1b/L2]\_[conus/fulldisk].nc
 To check the results, NetCDF files can be easily viewed using [Panoply](https://www.giss.nasa.gov/tools/panoply/).
 
 ## Author
-* **Rebekah Bradley Esmaili** [bekah@umd.edu](mailto:bekah@umd.edu)
+* **Rebekah Bradley Esmaili** [rebekah.esmaili@gmail.com](mailto:rebekah.esmaili@gmail.com)
 
 ## More Information
 
-* GOES-16 input data can be downloaded from NOAA's [Comprehensive Large Array-data Stewardship System (CLASS)](https://www.class.noaa.gov/).
+* GOES L1b and L2 data can be downloaded from the [Registry of Open Data on AWS](https://registry.opendata.aws/noaa-goes/) or NOAA's [Comprehensive Large Array-data Stewardship System (CLASS)](https://www.class.noaa.gov/)
 * A detailed description of the coordinate system and the conversion to a map project can be found in Section 4.2 of the [Product Definition and Users Guide, Vol. 5](www.goes-r.gov/products/docs/PUG-L2+-vol5.pdf).
-* At the time of writing, some of GOES-16 L2 products are in the *Beta Phase*. Data are preliminary and cannot be used for scientific research or operational use.
-* Additional information on GOES-16 products can be found in the [Algorithm Theoretical Basis Documents (ATBD)](http://www.goes-r.gov/resources/docs.html).
+* Additional information on GOES products can be found in the [Algorithm Theoretical Basis Documents (ATBD)](http://www.goes-r.gov/resources/docs.html).
